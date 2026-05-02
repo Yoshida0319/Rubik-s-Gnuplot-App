@@ -1,5 +1,2 @@
 streamlit
-subprocess
-PIL
-time
 numpy
