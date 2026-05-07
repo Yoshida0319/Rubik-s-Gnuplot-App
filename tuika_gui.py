@@ -262,9 +262,12 @@ def gra_saisei(aslkh):
     width, height = img.size
     js_frames = json.dumps(imdg)
     canvas_html = f"""
-    <canvas id="canvas" style="border:1px solid #000;"></canvas>
+    <div id="wrapper" style="width: 100%;">
+        <canvas id="canvas" style="width: 100%; border:1px solid #000;"></canvas>
+    </div>
     <script>
         const frames = {js_frames};
+        const wrapper = document.getElementById('wrapper');
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
         const loadedFrames = [];
@@ -274,13 +277,18 @@ def gra_saisei(aslkh):
             img.onload = () => {{
                 loaded++;
                 if (loaded === frames.length) {{
-                    startAnimation();
+                    const displayWidth = wrapper.clientWidth;
+                    const scale = displayWidth / img.width;
+                    const displayHeight = img.height * scale;
+                    canvas.width = displayWidth;
+                    canvas.height = displayHeight;
+                    startAnimation(displayWidth, displayHeight);
                 }}
             }};
             img.src = "data:image/png;base64," + frames[i];
             loadedFrames.push(img);
         }}
-        function startAnimation() {{
+        function startAnimation(displayWidth, displayHeight) {{
             canvas.width = loadedFrames[0].width;
             canvas.height = loadedFrames[0].height;
             let index = 0;
@@ -288,7 +296,7 @@ def gra_saisei(aslkh):
                 if (index >= loadedFrames.length) {{
                     return;
                 }}
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.clearRect(0, 0, displayWidth, displayHeight);
                 ctx.drawImage(loadedFrames[index], 0, 0);
                 index++;
                 setTimeout(draw, 100);
@@ -300,15 +308,9 @@ def gra_saisei(aslkh):
     with placeholder:
         components.html(canvas_html, height=height+50)
 
-#def camcan():
-
-
-
-
 sasakusei()
 with st.container(horizontal_alignment="center"):
     placeholder = st.empty()#グラフ表示場所
 gra_saisei(0)
 st.write("")
 st.write("Available command:　U, F, R, B, L, D,　x, y, z,　m, e, s,　Uw, Fw, Rw, Bw, Lw, Dw,　or each + {'} , {2}")
-
