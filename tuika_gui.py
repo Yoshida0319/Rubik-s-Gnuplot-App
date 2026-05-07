@@ -66,6 +66,7 @@ def sasakusei():
         gra_saisei(1)
         move_N(Notation_display)
         st.session_state.noki = 0
+    st.write("Available command:　U, F, R, B, L, D,　x, y, z,　m, e, s,　Uw, Fw, Rw, Bw, Lw, Dw,　or each + {'} , {2}")
 
 def button_irekae(nosnos,niaosa):
     if st.button("Execute"):#ボタン生成
@@ -312,5 +313,3 @@ sasakusei()
 with st.container(horizontal_alignment="center"):
     placeholder = st.empty()#グラフ表示場所
 gra_saisei(0)
-st.write("")
-st.write("Available command:　U, F, R, B, L, D,　x, y, z,　m, e, s,　Uw, Fw, Rw, Bw, Lw, Dw,　or each + {'} , {2}")
