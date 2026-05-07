@@ -243,8 +243,8 @@ def gra_saisei():
     for j in range(frame_count):
         img.seek(j)#指定したフレームに移動
         placeholder.image(img.copy())
-        if j != frame_count:
-            time.sleep(0.05)#再生速度の調整
+        #if j != frame_count:
+        #    time.sleep(0.05)#再生速度の調整
 
 
 sasakusei()
